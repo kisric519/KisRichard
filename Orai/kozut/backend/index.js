@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
 const db = mysql.createConnection({
   user: "root",
@@ -18,15 +18,23 @@ const db = mysql.createConnection({
 
 app.get("/", (req,res) => {
   res.send("Szerver fut");
-})
+});
 
-app.get("/user", (req,res) => {
+app.get("/regiok", (req,res) => {
   const sql = "SELECT * FROM `regiok`";
   db.query(sql, (err, result) => {
     if (err) return res.json(err);
     return res.json(result);
-  })
-})
+  });
+});
+
+app.get("/8_id", (req,res) => {
+  const sql = "SELECT * FROM `regiok` WHERE Rid = 8;";
+  db.query(sql, (err, result) => {
+    if (err) return res.json(err);
+    return res.json(result);
+  });
+});
 
 const port = 3333;
 app.listen(port, () => {
