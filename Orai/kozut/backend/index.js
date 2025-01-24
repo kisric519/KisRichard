@@ -8,7 +8,25 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
+const db = mysql.createConnection({
+  user: "root",
+  host: "127.0.0.1",
+  port: 3306,
+  password: "",
+  database: "kozutak"
+});
 
+app.get("/", (req,res) => {
+  res.send("Szerver fut");
+})
+
+app.get("/user", (req,res) => {
+  const sql = "SELECT * FROM `regiok`";
+  db.query(sql, (err, result) => {
+    if (err) return res.json(err);
+    return res.json(result);
+  })
+})
 
 const port = 3333;
 app.listen(port, () => {
