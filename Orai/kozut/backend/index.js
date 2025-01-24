@@ -28,9 +28,10 @@ app.get("/regiok", (req,res) => {
   });
 });
 
-app.get("/8_id", (req,res) => {
-  const sql = "SELECT * FROM `regiok` WHERE Rid = 8;";
-  db.query(sql, (err, result) => {
+app.get("/id/:id", (req,res) => {
+  const Rid = req.params.id
+  const sql = "SELECT * FROM `regiok` WHERE Rid = ?;" ;
+  db.query(sql,[Rid], (err, result) => {
     if (err) return res.json(err);
     return res.json(result);
   });
