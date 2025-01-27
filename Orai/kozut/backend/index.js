@@ -31,8 +31,8 @@ app.get("/regiok", (req,res) => {
 
 //Egy régió lekérése
 app.get("/regio/:id", (req,res) => {
-  const Rid = req.params.id
-  const sql = "SELECT * FROM `regiok` WHERE Rid = ?;" ;
+  const Rid = req.params.id;
+  const sql = "SELECT * FROM `regiok` WHERE Rid = ?;";
   const values = [Rid];
 
   db.query(sql, values, (err, result) => {
@@ -48,12 +48,44 @@ app.post("/ujregio", (req,res) =>{
 
   db.query(sql, values, (err, result) => {
     if (err){
-      console.error("Hiba történt: ", err)
-      return res.status(500).json({error: "Adatbázis hiba történt"})
+      console.error("Hiba történt: ", err);
+      return res.status(500).json({error: "Adatbázis hiba történt"});
     }
     return res.status(200).json({message: "Sikeres beszúrás", result});
   });
 })
+
+//Több régió felvétele
+app.post("/tobbujregio", (req,res) =>{
+  const sql = "INSERT INTO `regiok` (`Rid`, `regionev`, `regio_tipusa`) VALUES (?,?,?), (?,?,?)";
+  const values = [
+    '14', 'Budapest', 'Főváros',
+    '15', 'Budapest', 'Főváros'
+  ];
+
+  db.query(sql, values, (err, result) => {
+    if (err){
+      console.error("Hiba történt: ", err);
+      return res.status(500).json({error: "Adatbázis hiba történt"});
+    }
+    return res.status(200).json({message: "Sikeres beszúrás", result});
+  });
+})
+
+//Régió törlése
+app.delete("/regiotorles/:id", (req,res) =>{
+  const Rid = req.params.id;
+  const sql = "DELETE FROM `regiok` WHERE `Rid` = ?;";
+  const values = [Rid];
+
+  db.query(sql, values, (err, result) => {
+    if (err){
+      console.error("Hiba történt: ", err);
+      return res.status(500).json({error: "Adatbázis hiba történt"});
+    }
+    return res.status(200).json({message: "Sikeres törlés", result});
+  });
+});
 
 const port = 3333;
 app.listen(port, () => {
