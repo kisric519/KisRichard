@@ -20,6 +20,7 @@ app.get("/", (req,res) => {
   res.send("Szerver fut");
 });
 
+//Összes réfió lekérése
 app.get("/regiok", (req,res) => {
   const sql = "SELECT * FROM `regiok`";
   db.query(sql, (err, result) => {
@@ -28,14 +29,31 @@ app.get("/regiok", (req,res) => {
   });
 });
 
-app.get("/id/:id", (req,res) => {
+//Egy régió lekérése
+app.get("/regio/:id", (req,res) => {
   const Rid = req.params.id
   const sql = "SELECT * FROM `regiok` WHERE Rid = ?;" ;
-  db.query(sql,[Rid], (err, result) => {
+  const values = [Rid];
+
+  db.query(sql, values, (err, result) => {
     if (err) return res.json(err);
     return res.json(result);
   });
 });
+
+//Régió felvétele
+app.post("/ujregio", (req,res) =>{
+  const sql = "INSERT INTO `regiok` (`Rid`, `regionev`, `regio_tipusa`) VALUES (?,?,?)";
+  const values = ['11', 'Budapest', 'Főváros'];
+
+  db.query(sql, values, (err, result) => {
+    if (err){
+      console.error("Hiba történt: ". err)
+      return res.status(500).json({error: "Adatbázis hiba történt"})
+    }
+    return res.status(200).json({message: "Sikeres beszúrás", result});
+  });
+})
 
 const port = 3333;
 app.listen(port, () => {
