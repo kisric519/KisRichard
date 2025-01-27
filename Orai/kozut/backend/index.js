@@ -48,7 +48,7 @@ app.post("/ujregio", (req,res) =>{
 
   db.query(sql, values, (err, result) => {
     if (err){
-      console.error("Hiba történt: ". err)
+      console.error("Hiba történt: ", err)
       return res.status(500).json({error: "Adatbázis hiba történt"})
     }
     return res.status(200).json({message: "Sikeres beszúrás", result});
