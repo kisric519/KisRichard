@@ -87,6 +87,21 @@ app.delete("/regiotorles/:id", (req,res) =>{
   });
 });
 
+//Több régió törlése
+app.delete("/tobbregiotorles", (req,res) =>{
+  const ids = req.body.ids;
+  const sql = "DELETE FROM `regiok` WHERE `Rid` IN (?);";
+  const values = [ids];
+
+  db.query(sql, values, (err, result) => {
+    if (err){
+      console.error("Hiba történt: ", err);
+      return res.status(500).json({error: "Adatbázis hiba történt"});
+    }
+    return res.status(200).json({message: "Sikeres törlés", result});
+  });
+});
+
 const port = 3333;
 app.listen(port, () => {
   console.log(`Szerver fut a ${port} porton!`);
