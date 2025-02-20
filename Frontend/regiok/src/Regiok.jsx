@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Termekek = (props) => {
+const Regiok = (props) => {
     const [regiok, setRegiok] = useState([]);
     useEffect(() => {
         fetch(`http://127.0.0.1:3333/regiok`)
@@ -12,7 +12,7 @@ const Termekek = (props) => {
     return (
         <div className="container-fluid bg-light-gray"> 
             <article className="row justify-content-center ">
-                <h1 className="text-center display-4 mt-5 mb-5 bg-light-blue">Kollekciók</h1>
+                <h1 className="text-center display-4 mt-5 mb-5 pb-2 bg-light-blue">Régiók</h1>
                 <div className="row">
                         {regiok.map(regio => (
                             <div className="col-md-4">
@@ -30,4 +30,4 @@ const Termekek = (props) => {
     );
 }
 
-export default Termekek;
+export default Regiok;
