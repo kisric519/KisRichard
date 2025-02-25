@@ -39,6 +39,21 @@ app.get("/szoba/:id", (req,res) => {
   });
 });
 
+app.get("/szobafoglaltsag/:id", (req,res) => {
+  const id = req.params.id
+
+  const sql = `SELECT vendegek.vnev, foglalasok.erk, foglalasok.tav
+  FROM foglalasok
+  INNER JOIN vendegek ON foglalasok.vendeg = vendegek.vsorsz
+  INNER JOIN szobak ON foglalasok.szoba = szobak.szazon
+  WHERE szobak.szazon = `+id;
+
+  db.query(sql, (err, result) => {
+    if (err) return res.json(err);
+    return res.json(result);
+  });
+});
+
 
 const port = 3001;
 app.listen(port, () => {

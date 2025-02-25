@@ -6,12 +6,11 @@ const Szobak = (({id}) => {
     const [szobak, setSzobak] = useState([]);
 
     useEffect(() => {
-        if(id != ""){
+        if(id){
             axios.get(`http://127.0.0.1:3001/szoba/`+id)
             .then(res => {
                 console.log(res.data)
                 setSzobak(res.data)
-
             })
             .catch(err => console.error(err));
         }else{

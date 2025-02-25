@@ -29,7 +29,7 @@ const Home = (() => {
                     <div className="col-4">
                         <h3>A hét törpe fogadó</h3>
 
-                        <Szobak id={""} />
+                        <Szobak />
                     </div>
                 </div>
             </div>
